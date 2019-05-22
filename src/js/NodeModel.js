@@ -41,7 +41,7 @@ class NodeModel {
                 children: node.children,
                 parent,
                 isParent,
-                isLeaf: !this.expandable || !isParent,
+                isLeaf: this.isLeaf || !isParent,
                 expandable: this.expandable,
                 showCheckbox:
                     node.showCheckbox !== undefined ? node.showCheckbox : true,

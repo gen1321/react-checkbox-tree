@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 const nodeShape = {
     label: PropTypes.node.isRequired,
@@ -8,14 +8,14 @@ const nodeShape = {
     expandable: PropTypes.bool,
     icon: PropTypes.node,
     showCheckbox: PropTypes.bool,
-    title: PropTypes.string
+    title: PropTypes.string,
 };
 
 const nodeShapeWithChildren = PropTypes.oneOfType([
     PropTypes.shape(nodeShape),
     PropTypes.shape({
         ...nodeShape,
-        children: PropTypes.arrayOf(nodeShape).isRequired
+        children: PropTypes.arrayOf(nodeShape).isRequired,
     })
 ]);
 
