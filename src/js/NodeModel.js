@@ -36,6 +36,8 @@ class NodeModel {
             const isParent = this.nodeHasChildren(node);
             const isLeaf =
                 typeof this.isLeaf === "undefined" ? !isParent : this.isLeaf;
+
+            console.log(isLeaf);
             this.flatNodes[node.value] = {
                 label: node.label,
                 value: node.value,
