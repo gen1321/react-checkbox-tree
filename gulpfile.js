@@ -67,8 +67,6 @@ gulp.task(
 gulp.task("build-style", () =>
     gulp
         .src("./src/scss/**/*.scss")
-        .pipe(scsslint())
-        .pipe(scsslint.failReporter())
         .pipe(
             sass({
                 outputStyle: "expanded"
@@ -123,8 +121,6 @@ function buildExamplesScript(mode = "development") {
 function buildExamplesStyle(minifyStyles = false) {
     let stream = gulp
         .src("./examples/src/scss/**/*.scss")
-        .pipe(scsslint())
-        .pipe(scsslint.failReporter())
         .pipe(
             sass({
                 outputStyle: "expanded"
