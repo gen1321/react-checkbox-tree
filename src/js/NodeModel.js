@@ -34,14 +34,15 @@ class NodeModel {
         // Flatten the `node` property for internal lookups
         nodes.forEach((node, index) => {
             const isParent = this.nodeHasChildren(node);
-
+            const isLeaf =
+                typeof this.isLeaf === "undefined" ? !isParent : this.isLeaf;
             this.flatNodes[node.value] = {
                 label: node.label,
                 value: node.value,
                 children: node.children,
                 parent,
                 isParent,
-                isLeaf: this.isLeaf !== "undefined" ? this.isLeaf : !isParent,
+                isLeaf: isLeaf,
                 expandable: this.expandable,
                 showCheckbox:
                     node.showCheckbox !== undefined ? node.showCheckbox : true,
