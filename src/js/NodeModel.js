@@ -35,7 +35,7 @@ class NodeModel {
         nodes.forEach((node, index) => {
             const isParent = this.nodeHasChildren(node);
             const isLeaf =
-                typeof this.isLeaf === "undefined" ? !isParent : this.isLeaf;
+                typeof node.isLeaf === "undefined" ? !isParent : node.isLeaf;
 
             console.log(isLeaf);
             this.flatNodes[node.value] = {
@@ -45,7 +45,6 @@ class NodeModel {
                 parent,
                 isParent,
                 isLeaf: isLeaf,
-                expandable: this.expandable,
                 showCheckbox:
                     node.showCheckbox !== undefined ? node.showCheckbox : true,
                 disabled: this.getDisabledState(
