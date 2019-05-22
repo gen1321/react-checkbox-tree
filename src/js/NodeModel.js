@@ -12,7 +12,7 @@ class NodeModel {
         const clonedNodes = {};
 
         // Re-construct nodes one level deep to avoid shallow copy of mutable characteristics
-        Object.keys(this.flatNodes).forEach((value) => {
+        Object.keys(this.flatNodes).forEach(value => {
             const node = this.flatNodes[value];
             clonedNodes[value] = { ...node };
         });
@@ -41,11 +41,18 @@ class NodeModel {
                 children: node.children,
                 parent,
                 isParent,
-                isLeaf: !isParent,
-                showCheckbox: node.showCheckbox !== undefined ? node.showCheckbox : true,
-                disabled: this.getDisabledState(node, parent, disabled, noCascade),
+                isLeaf: !this.expandable || !isParent,
+                expandable: this.expandable,
+                showCheckbox:
+                    node.showCheckbox !== undefined ? node.showCheckbox : true,
+                disabled: this.getDisabledState(
+                    node,
+                    parent,
+                    disabled,
+                    noCascade
+                ),
                 treeDepth: depth,
-                index,
+                index
             };
             this.flattenNodes(node.children, node, depth + 1);
         });
@@ -68,18 +75,18 @@ class NodeModel {
     }
 
     deserializeLists(lists) {
-        const listKeys = ['checked', 'expanded'];
+        const listKeys = ["checked", "expanded"];
 
         // Reset values to false
-        Object.keys(this.flatNodes).forEach((value) => {
-            listKeys.forEach((listKey) => {
+        Object.keys(this.flatNodes).forEach(value => {
+            listKeys.forEach(listKey => {
                 this.flatNodes[value][listKey] = false;
             });
         });
 
         // Deserialize values and set their nodes to true
-        listKeys.forEach((listKey) => {
-            lists[listKey].forEach((value) => {
+        listKeys.forEach(listKey => {
+            lists[listKey].forEach(value => {
                 if (this.flatNodes[value] !== undefined) {
                     this.flatNodes[value][listKey] = true;
                 }
@@ -90,7 +97,7 @@ class NodeModel {
     serializeList(key) {
         const list = [];
 
-        Object.keys(this.flatNodes).forEach((value) => {
+        Object.keys(this.flatNodes).forEach(value => {
             if (this.flatNodes[value][key]) {
                 list.push(value);
             }
@@ -100,7 +107,7 @@ class NodeModel {
     }
 
     expandAllNodes(expand) {
-        Object.keys(this.flatNodes).forEach((value) => {
+        Object.keys(this.flatNodes).forEach(value => {
             if (this.flatNodes[value].isParent) {
                 this.flatNodes[value].expanded = expand;
             }
@@ -118,10 +125,10 @@ class NodeModel {
             }
 
             // Set the check status of a leaf node or an uncoupled parent
-            this.toggleNode(node.value, 'checked', isChecked);
+            this.toggleNode(node.value, "checked", isChecked);
         } else {
             // Percolate check status down to all children
-            flatNode.children.forEach((child) => {
+            flatNode.children.forEach(child => {
                 this.toggleChecked(child, isChecked, noCascade);
             });
         }
